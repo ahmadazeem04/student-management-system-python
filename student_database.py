@@ -2,12 +2,12 @@ import tkinter as tk
 import sqlite3
 from tkinter import ttk, messagebox
 
-con = sqlite3.connect("university.db")
+con = sqlite3.connect("student.db")
 con.execute("CREATE TABLE IF NOT EXISTS student(name TEXT, branch TEXT, section TEXT, roll INTEGER, cgpa FLOAT);")
 
 
 def insert_data(name, branch, section, roll, cgpa):
-    conn = sqlite3.connect("university.db")
+    conn = sqlite3.connect("student.db")
     conn.execute("INSERT INTO student(name, branch, section, roll, cgpa) VALUES( '" + name + "', '" + branch +
                  "', '" + section + "', '" + roll + "', '" + cgpa + "' );")
     conn.commit()
@@ -50,7 +50,7 @@ def insert():
 
 
 def display():
-    connn = sqlite3.connect("university.db")
+    connn = sqlite3.connect("student.db")
     display_window = tk.Tk()
     display_window.title("Students Database")
     table = ttk.Treeview(display_window)
@@ -103,7 +103,7 @@ def update():
         ssection = s_section.get()
         sroll = s_roll.get()
         scgpa = s_cgpa.get()
-        scon = sqlite3.connect("university.db")
+        scon = sqlite3.connect("student.db")
         scon.execute("UPDATE student SET name = '" + sname + "',branch = '" + sbranch + "', section = '" + ssection +
                      "', roll = '" + sroll + "', cgpa = '" + scgpa + "' WHERE rowid = " + sid + ";")
         scon.commit()
@@ -125,7 +125,7 @@ def delete():
 
     def submit():
         dname = d_name.get()
-        dcon = sqlite3.connect("university.db")
+        dcon = sqlite3.connect("student.db")
         dcon.execute("DELETE FROM student WHERE name = '" + dname+"';")
         dcon.commit()
         dcon.execute("VACUUM;")
@@ -164,7 +164,7 @@ def search():
             details.delete(row)
 
         fname = f_name.get()
-        fcon = sqlite3.connect("university.db")
+        fcon = sqlite3.connect("student.db")
         cursor = fcon.execute("SELECT rowid,* from student WHERE name = '" + fname + "';")
         fcon.commit()
 
